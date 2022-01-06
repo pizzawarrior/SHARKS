@@ -17,3 +17,6 @@ ggplot(Cali_Top_10_Locations, aes(x = reorder(Location.and.County..Cleaned., +In
   geom_bar(position="dodge", stat="identity") + 
   theme(axis.text.x = element_text(angle = 47, vjust = 1, hjust=1)) +
   ggtitle("Top 10 California Beaches by Number of Shark Encounters, 1958-2018")
+
+#Save plot
+ggsave(file="Top 10 California Beaches by Number of Shark Encounters, 1958-2018.svg", width=15, height=8)

@@ -12,7 +12,7 @@ Post_1958<- NEW_SHARKS %>%
   filter(Year >1958 & Year <2018)
 
 Top_10_Countries <- Post_1958 %>%
-  group_by(Country) %>% 
+  group_by(Location) %>% 
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents)) %>% 
   top_n(10)
@@ -25,18 +25,19 @@ ggplot(Top_10_Countries, aes(x = reorder(Country, +Incidents), y = Incidents)) +
 ggsave(file="Sharks_Plot_Top_10_Countries_1958-2017.svg", width=15, height=8)
 
 #Use Rate to define Group by Incidents per year since 1958 in USA
-Rate<- filter(Post_1958, Country == "USA")
+USA_Rate<- filter(Post_1958, Country == "USA")
 
 #Isolate Rate further
-Final_USA <- Rate %>%
+Final_USA <- USA_Rate %>%
   group_by(Year) %>% 
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents))
   
 #Line Plot Rate_USA
 ggplot(Final_USA, aes(x=Year, y=Incidents)) +
-  geom_line()
-  
+  geom_line() +
+ggtitle("Rate of shark encounters in US since 1958")
+
 ggsave(file="USA_Sharks_Line_Plot_1958-2018.svg", width=15, height=8)
 
 #Isolate California only
@@ -46,28 +47,11 @@ Cali_incidents<- filter(Post_1958, Area== "California")
 write.csv(Cali_incidents,"~/Desktop/EMERGENT WORKS/SHARKS\\Cali Incidents Post_1958.csv", 
           row.names = TRUE)
 
-#Group by top 25 locations
-Cali_top_25 <- Cali_incidents %>%
-  group_by(Location) %>% 
-  summarise(Incidents=n()) %>% 
-  arrange(desc(Incidents)) %>% 
-  top_n(20)
-
-#Bar plot Cali top 25
-ggplot(Cali_top_25, aes(x = reorder(Location, +Incidents), y = Incidents)) +
-  geom_bar(position="dodge", stat="identity")
-
 #Isolate Cali Rate
-Cali_Rate <- Cali_incidents %>%
+Cali_Rate<- Cali_incidents %>%
   group_by(Year) %>% 
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents))
-
-#Line plot Cali Rate
-(p<- ggplot(Cali_Rate, aes(x=Year, y=Incidents)) +
-  geom_line())
-
-ggsave(file="Cali_Sharks_Line_Plot_1958-2018.svg", width=15, height=8)
 
 #plotly interactive graph
 ggplotly(p)
@@ -86,7 +70,8 @@ ggsave(file="Cali_Top_25_Beaches.svg", width=15, height=8)
  
 #change x axis labels to 45 degree
 ggplot(Cali_top_25, aes(x = reorder(Location, +Incidents), y = Incidents)) +
-  geom_bar(position="dodge", stat="identity") + theme(axis.text.x = element_text(angle = 47, vjust = 1, hjust=1))
+  geom_bar(position="dodge", stat="identity") + 
+  theme(axis.text.x = element_text(angle = 47, vjust = 1, hjust=1))
 
 #Split variable "Location" into beach and county: INCONCLUSIVE
 Cali_incidents %>% 
