@@ -62,3 +62,21 @@ Cali_or_USA %>%
 
 #Alternative: Use bind_cols instead of using bind_rows: JOIN DATA!!!!!!!
 Cali_or_USA2<- bind_cols(Cali_Rate2, Final_USA2)
+
+#example of a join:
+joined_data <- full_join(Cali_Rate2, Final_USA2, 
+                         by = "Year",
+                         suffix = c("_cali", "_usa")) %>%
+  select(-starts_with("Loc")) %>% # get rid of unnecessary "Loc_" columns
+  arrange(-Year)
+
+## in what years were there more incidents in Cali than the rest of the US combined?
+joined_data %>%
+  filter(Incidents_cali > Incidents_usa)
+
+## is the difference in the number of incidents between usa and cali increasing over time? 
+out <- joined_data %>%
+  mutate(diff = Incidents_usa - Incidents_cali) 
+
+## yes!
+plot(out$Year, out$diff)
