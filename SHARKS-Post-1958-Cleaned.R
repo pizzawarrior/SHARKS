@@ -12,7 +12,7 @@ Post_1958<- NEW_SHARKS %>%
   filter(Year >1958 & Year <2018)
 
 Top_10_Countries <- Post_1958 %>%
-  group_by(Location) %>% 
+  group_by(Country) %>% 
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents)) %>% 
   top_n(10)
@@ -56,7 +56,7 @@ Cali_Rate<- Cali_incidents %>%
 #plotly interactive graph
 ggplotly(p)
 
-#Assign title to plot
+#Plot Cali_Rate
 ggplot(Cali_Rate, aes(x=Year, y=Incidents)) +
   geom_line()+ 
   ggtitle("Rate of shark encounters in California since 1958")
@@ -95,16 +95,12 @@ Incidents_by_Cali_flag <- Cali_flag %>%
   arrange(desc(Incidents))
   
 ggplot(Incidents_by_Cali_flag, aes(x = California_Flag, y = Incidents)) +
-  geom_bar(position="dodge", stat="identity")
-
-#Assign title to plot
-ggplot(Incidents_by_Cali_flag, aes(x = California_Flag, y = Incidents)) +
   geom_bar(position="dodge", stat="identity") +
   ggtitle("Cali vs The World")
 
 #Add in new variable of Cali population and world population
 
-#Create new variable, USA_flag from Post_1958
+#Create new variable, USA_flag from Post_1958: Conditional mutate dplyr
 USA_flag<- Post_1958 %>% 
   mutate(USA_flag= ifelse(
     test =  Country == "USA",
@@ -112,10 +108,7 @@ USA_flag<- Post_1958 %>%
     no = "Rest of the World")) %>% 
   select(Country, USA_flag)
 
-Post_1958 %>% 
-  select(Area, Country)
-
-#Add California to Countries data frame
+#Add California to Countries variable to separate it from USA: Conditional mutate dplyr
 USA_plus_Cali<- Post_1958 %>% 
   mutate(USA_plus_Cali= ifelse(
     test =  Area == "California",
@@ -137,7 +130,7 @@ ggplot(Incidents_by_Country_and_Cali, aes(x = reorder(USA_plus_Cali, +Incidents)
  
 ggsave(file="California_Country_USA_Incidents.svg", width=15, height=8)
 
-#Add Florida to Countries List
+#Add Florida to Countries List to separate it from USA: Conditional mutate dplyr
 USA_plus_Florida<- Post_1958 %>% 
   mutate(USA_plus_Florida= ifelse(
     test =  Area == "Florida",
@@ -157,7 +150,7 @@ ggplot(Incidents_by_Country_and_Florida, aes(x = reorder(USA_plus_Florida, +Inci
   geom_bar(position="dodge", stat="identity") + 
   theme(axis.text.x = element_text(angle = 47, vjust = 1, hjust=1))
 
-#Group Cali and Florida data sets with Countries:
+#Group Cali and Florida data sets with Countries: Conditional mutate dplyr
 Cali_Florida_Countries<- Post_1958 %>% 
   mutate(Cali_Florida_Countries= 
   ifelse(test = Area == "Florida", yes =  "FLORIDA",
