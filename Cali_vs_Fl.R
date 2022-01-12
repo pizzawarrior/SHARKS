@@ -1,4 +1,3 @@
-
 #Line Plot California Rate vs Florida Rate 1958-2017
 #Line Plot California Rate vs Florida Rate vs Rest of USA 1958-2017
 

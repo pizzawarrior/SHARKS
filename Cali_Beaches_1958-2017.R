@@ -1,3 +1,6 @@
+#California top 10 beaches by incident
+#California top 5 counties WITH population
+
 library(tidyverse)
 library(svglite)
 library(plotly)
@@ -36,7 +39,6 @@ Cali_Top_5_Counties <- Cali_Beaches_and_Counties %>%
   top_n(5) %>% 
   mutate(Metric= "Incidents")
 
-
 #Plot top 5 counties
 ggplot(Cali_Top_5_Counties, aes(x = reorder(County, +Incidents), y = Incidents)) +
   geom_bar(position="dodge", stat="identity") + 
@@ -63,12 +65,17 @@ Cali_Counties_Incidents_w_Population<- bind_rows(Cali_Top_5_Counties,
 
 ?facet_wrap
 
+?geom_col
+
 #PLOT IT!!!
 #Use scales library to adjust the representation of the numbers on y axis
 ggplot(Cali_Counties_Incidents_w_Population) + 
   geom_col(mapping = aes(x = County, y = Number)) +
   facet_wrap(~ Metric, scales="free") +
-  scale_y_continuous(name="Fluorescent intensity/arbitrary units", 
+  scale_y_continuous(name="Incidents/ Population", 
   labels = comma)
 
 ?facet_grid
+
+ggsave(file="Cali_Top_5_Counties_with_Population_2017.svg", 
+       width=15, height=8)
