@@ -70,8 +70,16 @@ Cali_or_USA %>%
 ggsave(file="Rate_of_shark_encounters_California_vs_rest_of_USA_1958-2018.svg", 
        width=15, height=8)
 
-#Alternative: Use bind_cols instead of using bind_rows: JOIN DATA!!!!!!!
+#Alternative: Use bind_cols instead of using bind_rows: Won't work because rows are not equal
 Cali_or_USA2<- bind_cols(Cali_Rate2, Final_USA2)
+
+#Left join: will lose rows that are not present in other
+Cali_USA_Left_Joined<- Cali_Rate2 %>%
+  left_join(Final_USA2, by = "Year")
+
+#Full Join: will join and add all rows even if there is a discrepancy between 2 sets
+Cali_USA_Full_Join <- Cali_Rate2 %>%
+  full_join(Final_USA2, by = "Year")
 
 #example of a join:
 joined_data <- full_join(Cali_Rate2, Final_USA2, 
@@ -80,9 +88,21 @@ joined_data <- full_join(Cali_Rate2, Final_USA2,
   select(-starts_with("Loc")) %>% # get rid of unnecessary "Loc_" columns
   arrange(-Year)
 
-## in what years were there more incidents in Cali than the rest of the US combined?
-joined_data %>%
-  filter(Incidents_cali > Incidents_usa)
+?left_join
+
+?tribble
+
+#Show years where incidents in Cali were greater than incidents USA
+Cali_USA_Joined_Greater_than <- Cali_USA_Full_Join %>% 
+  filter(Incidents.x > Incidents.y)
+
+#Show years where Incidents in Cali and USA were greater than 20
+Cali_USA_Full_Join %>% 
+  filter(Incidents.x > 20 | Incidents.y >20)
+
+#Show max number of Cali incidents by year: (Inconclusive)
+Cali_USA_Full_Join %>% 
+  filter(Incidents.x == max(Incidents.x))
 
 ## is the difference in the number of incidents between usa and cali increasing over time? 
 out <- joined_data %>%
@@ -90,3 +110,4 @@ out <- joined_data %>%
 
 ## yes!
 plot(out$Year, out$diff)
+
