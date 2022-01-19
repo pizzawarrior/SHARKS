@@ -9,13 +9,34 @@ library(scales)
 #read in filtered dataset of 1958-2018 Cali Beaches
 Cali_Beaches<- read.csv("~/First-Repo/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
 
+#Arrange Beach and County by Top 10
+Cali_Top_10_Beaches_with_County <- Cali_Beaches %>%
+  group_by(Location.and.County..Cleaned.) %>% 
+  summarise(Incidents=n()) %>% 
+  arrange(desc(Incidents)) %>% 
+  top_n(10)
+
+#Plot Top 10 Beaches AND County
+ggplot(Cali_Top_10_Beaches_with_County, aes(x = reorder(Location.and.County..Cleaned.,
+          +Incidents), y = Incidents)) +
+  geom_bar(position="dodge", stat="identity") + 
+  theme(axis.text.x = element_text(angle = 47, vjust = 1, hjust=1)) +
+  ggtitle("Top 10 California Beaches WITH COUNTY by Number of Shark Encounters, 
+          1958-2018")
+
+#Save plot
+ggsave(file="Top_10_California_Beaches_WITH_COUNTY_by_Number_of_Shark_Encounters_1958-2018.svg", 
+       width=15, height=8)
+
 #Separate Cali_Beaches column 'Location.and.County.Cleaned..' into Beach and County
-Cali_Beaches_and_Counties <- Cali_Beaches %>% 
+?col
+
+Cali_Beaches_and_Counties_Separated <- Cali_Beaches %>% 
   separate(col=Location.and.County..Cleaned., 
            into=c("Beach", "County"), sep=",")
 
-#Arrange by top 10
-Cali_Top_10_Beaches <- Cali_Beaches_and_Counties %>%
+#Arrange Beach by top 10
+Cali_Top_10_Beaches <- Cali_Beaches_and_Counties_Separated %>%
   group_by(Beach) %>% 
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents)) %>% 
