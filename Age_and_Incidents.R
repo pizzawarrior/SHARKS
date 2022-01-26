@@ -1,5 +1,7 @@
 
 #Does age have any significance in shark incidents????
+#Average age of victims in USA EACH YEAR from 1998-2017
+#Average age of victims in top 10 Countries from 1998-2017
 
 library(tidyverse)
 library(svglite)
@@ -76,6 +78,8 @@ label_data$hjust<-ifelse( angle < -90, 1, 0)
 # flip angle BY to make them readable
 label_data$angle<-ifelse(angle < -90, angle+180, angle)
 
+class(Filtered_USA_Last_20_Years$Year)
+
 #Plot:
 ggplot(Filtered_USA_Last_20_Years, aes(x=Year, y=Avg_Age_Rounded)) +
   
@@ -132,7 +136,7 @@ label_data2 <- id_Filtered_World_20_Yrs
 
 # calculate the ANGLE of the labels
 number_of_bar2 <- nrow(label_data2)
-angle <-  90 - 360 * (label_data2$id=-.5) /number_of_bar2
+angle <-  90 - 360 * (label_data2$id-0.5) /number_of_bar2
 # I subtract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)
 
 # calculate the alignment of labels: right or left
@@ -166,7 +170,8 @@ ggplot(id_Filtered_World_20_Yrs, aes(x=Country, y=Avg_Age_Rounded)) +
     hjust=hjust), color="black", fontface="bold",alpha=0.6, 
             size=2.5, angle= label_data2$angle, inherit.aes = FALSE)
 
-
+ggsave(file="Average_Age_of_Shark_Attack_Victims_in_WORLD_1998_2017_Circular_Bar.svg", 
+       width=15, height=15)
 
 
 #Calculate average age of incidents by beach!!!
