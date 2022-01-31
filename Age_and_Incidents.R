@@ -99,9 +99,10 @@ ggplot(Filtered_USA_Last_20_Years, aes(x=Year, y=Avg_Age_Rounded)) +
   coord_polar(start = 0) +
 
   #Add labels to columns, prepare data:
-geom_text(data=label_data, aes(x=Year, y=Avg_Age_Rounded+2, label= paste(Year, "\n", Avg_Age_Rounded, "yrs old"), 
-                               hjust=hjust), color="black", fontface="bold",alpha=0.6, 
-          size=2.5, angle= label_data$angle, inherit.aes = FALSE)
+geom_text(data=label_data, aes(x=Year, y=Avg_Age_Rounded+2, label= paste(Year, 
+      "\n", Avg_Age_Rounded, "yrs old"), 
+      hjust=hjust), color="black", fontface="bold",alpha=0.6, 
+      size=2.5, angle= label_data$angle, inherit.aes = FALSE)
 
 ?paste
 #Use paste to CONCATENATE (smoosh) several things together

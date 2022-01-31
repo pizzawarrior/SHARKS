@@ -53,7 +53,7 @@ ggsave(file="Top_10_California_Beaches_by_Number_of_Shark_Encounters_1958-2018.s
        width=15, height=8)
 
 #Produce top 5 COUNTIES in Cali by encounters, ADD new column 'incidents'
-Cali_Top_5_Counties <- Cali_Beaches_and_Counties %>% 
+Cali_Top_5_Counties <- Cali_Beaches_and_Counties_Separated %>% 
   group_by(County) %>% 
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents)) %>% 
