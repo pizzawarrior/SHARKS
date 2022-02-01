@@ -6,7 +6,7 @@ library(tidyverse)
 Cali_Beaches<- read.csv("~/First-Repo/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
 
 #Filter date range, add column of numeric age
-Cali_Beaches_1997_2017<- Cali_Beaches %>% 
+Cali_Beaches_1997_2018<- Cali_Beaches %>% 
   filter(Year> 1997 & Year< 2018) %>% 
   mutate(Age_Number = as.numeric(Age))
 
@@ -15,7 +15,7 @@ mean(Cali_Beaches_1997_2017$Age_Number, na.rm = TRUE)
 #[1] 35.43662
 
 #Separate Beaches/ County column to produce COUNTY column, filter years
-Cali_Beaches_and_Counties_Separated <- Cali_Beaches_1997_2017 %>% 
+Cali_Beaches_and_Counties_Separated <- Cali_Beaches_1997_2018 %>% 
   separate(col=Location.and.County..Cleaned., 
            into=c("Beach", "County"), sep=",")
   
@@ -27,13 +27,14 @@ Filtered_Cali_Beaches_1997_2018 <- Cali_Beaches_and_Counties_Separated %>%
             Avg_Age = mean(Age_Number, na.rm = TRUE)) %>% 
   mutate(Avg_Age_Rounded = round(Avg_Age, digits = 0)) %>% 
   arrange(desc(Incidents)) %>% 
-  head(10)
+  head(12)
 
-#Plot top 10 counties
-ggplot(Filtered_Cali_Beaches_1997_2018, aes(x = County, y = Avg_Age_Rounded)) +
-  geom_bar(position="dodge", stat="identity") + 
-  ggtitle("Avg Age of Victims Top 10 Counties in CA, 1997-2018")
+#Lollipop plot Top 10 Counties
+ggplot(Filtered_Cali_Beaches_1997_2018, aes(x=County, y=Avg_Age_Rounded)) +
+  geom_point() + 
+  geom_segment( aes(x=County, xend=County, y=0, yend=Avg_Age_Rounded)) +
+  ggtitle("Average Age of Shark Attack Victims Top 12 Counties, CA, 1998-2017")
 
 #Save plot
-ggsave(file="Avg_Age_of_Victims_Top_10_Counties_in_CA_1997_2018.svg", 
+ggsave(file="Avg_Age_of_Victims_Top_12_Counties_in_CA_1997_2018.svg", 
        width=15, height=8)
