@@ -1,4 +1,4 @@
-#California vs Top 10 Countries 1959-2018
+#California INCIDENTS vs Top 10 Countries 1959-2018
 
 library(tidyverse)
 library(svglite)
@@ -17,12 +17,14 @@ Cali_Countries<- Post_1958 %>%
         no= Country)) %>%
   select(Area, Country, Cali_Countries)
 
-#Group by Incidents
+#Group by Incidents, drop USA from the list using !
 Incidents_by_Country_Cali<- Cali_Countries %>%
   group_by(Cali_Countries) %>% 
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents)) %>% 
-  top_n(11)
+  filter(Cali_Countries != "USA") %>% 
+  top_n(10)
+  
 
 ggplot(Incidents_by_Country_Cali, aes(x = reorder(Cali_Countries, +Incidents),
                                                   y = Incidents)) +
