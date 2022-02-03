@@ -1,5 +1,6 @@
 
-#Line Plot California Rate vs USA Rate 1958-2017
+#Line Plot California Incident Rate vs USA Rate 1958-2017
+#Use join/ bind to combine dataframes
 
 library(tidyverse)
 library(svglite)
@@ -21,7 +22,7 @@ USA_by_Year <- USA_Rate %>%
   arrange(desc(Incidents))
 
 #Line Plot Rate_USA
-ggplot(Final_USA, aes(x=Year, y=Incidents)) +
+ggplot(USA_by_Year, aes(x=Year, y=Incidents)) +
   geom_line() +
   ggtitle("Rate of shark encounters in US 1958-2017")
 
@@ -83,8 +84,8 @@ Cali_USA_Full_Join <- Cali_Rate2 %>%
 
 #example of a join:
 joined_data <- full_join(Cali_Rate2, Final_USA2, 
-                         by = "Year",
-                         suffix = c("_cali", "_usa")) %>%
+            by = "Year",
+            suffix = c("_cali", "_usa")) %>%
   select(-starts_with("Loc")) %>% # get rid of unnecessary "Loc_" columns
   arrange(-Year)
 

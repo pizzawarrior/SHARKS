@@ -1,4 +1,4 @@
-#Top 9 countries PLUS CALIFORNIA (by most incidents) AVERAGE AGE 1998-2018 
+#Top 9 countries PLUS CALIFORNIA (by most incidents) AVERAGE AGE 1959-2018 
 
 library(tidyverse)
 library(svglite)
@@ -9,7 +9,7 @@ NEW_SHARKS <- read.csv("~/Desktop/EMERGENT WORKS/SHARKS/Datasets/NEW GSAF5.csv")
 
 #Group Cali and Florida data sets with Countries: Conditional mutate dplyr
 Cali_Countries<- NEW_SHARKS %>% 
-  filter(Year >1997 & Year <2018) %>% 
+  filter(Year >1958 & Year <2018) %>% 
   mutate(Cali_Countries= 
   ifelse(test = Area == "California", yes = "CALIFORNIA",
   no= Country)) %>%
@@ -74,5 +74,5 @@ ggplot(id_Cali_Countries, aes(x=Cali_Countries, y=Avg_Age_Rounded)) +
       hjust=hjust), color="black", fontface="bold",alpha=0.6, 
       size=2.5, angle= label_data$angle, inherit.aes = FALSE)
 
-ggsave(file="Average_Age_of_Shark_Attack_Victims_CA_vs_WORLD_1998_2017_Circular_Bar.svg", 
+ggsave(file="Average_Age_of_Shark_Attack_Victims_CA_vs_WORLD_1959_2018_Circular_Bar.svg", 
        width=15, height=15)

@@ -17,8 +17,9 @@ Cali_Top_10_Beaches_with_County <- Cali_Beaches %>%
   top_n(10)
 
 #Plot Top 10 Beaches AND County
-ggplot(Cali_Top_10_Beaches_with_County, aes(x = reorder(Location.and.County..Cleaned.,
-          +Incidents), y = Incidents)) +
+ggplot(Cali_Top_10_Beaches_with_County, 
+    aes(x = reorder(Location.and.County..Cleaned.,
+   +Incidents), y = Incidents)) +
   geom_bar(position="dodge", stat="identity") + 
   theme(axis.text.x = element_text(angle = 47, vjust = 1, hjust=1)) +
   ggtitle("Top 10 California Beaches WITH COUNTY by Number of Shark Encounters, 
