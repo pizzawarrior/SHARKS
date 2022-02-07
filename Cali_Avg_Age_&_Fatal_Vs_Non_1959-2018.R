@@ -1,5 +1,5 @@
 #Cali mean age of victim 1959-2018
-#Cali 1959-2018 fatal vs non fatal
+#Cali 1959-2018 fatal vs non fatal PIE CHART
 
 library(tidyverse)
 library(svglite)
@@ -22,7 +22,6 @@ mean(Cali_Beaches_Age_Number_1959_2018$Age_Number, na.rm = TRUE)
 #Summarize Fatal vs Non Fatal Incidents
 Cali_Total_Incidents <- Cali_Beaches %>% 
   summarise(Incidents=n())
-
 
 #Summarize Fatal vs Non Fatal Incidents
 Cali_Fatal_Non_Fatal <- Cali_Beaches %>% 
@@ -48,26 +47,6 @@ Cali_Fatal_Y_N_Pie<- Cali_Fatal_Y_N %>%
 
 #WORTHLESS: (Can not save, not a gg object)
 pie(Cali_Fatal_Y_N_Pie$Incidents , labels = c("Non Fatal", "Fatal"))
-
-####################################################################################
-
-#Try to arrive at DF that shows fatalities among TOTAL incidents:
-#Alternative attempts:
-Cali_Fatal_Yes_No <- filter(Cali_Beaches, Fatal..Y.N. %in% target) %>% 
-  group_by(Fatal..Y.N.) %>%
-  summarise(Incidents=n())
-
-# Basic piechart
-ggplot(Cali_Fatal_Yes_No, aes(x="", y=Incidents, fill=Fatal..Y.N.)) +
-  geom_bar(stat="identity", width=1, color="white") +
-  coord_polar("y", start=0) +
-  
-  theme_void() + # remove background, grid, numeric labels
-
-  ggtitle("CA 204 Fatal, 14 Non Fatal Incidents, 1959-2018")
-
-ggsave(file="Cali_Fatal_Non_Fatal_Incidents_1959_2018_Pie.svg",  
-       width=15, height=8)
 
 
 

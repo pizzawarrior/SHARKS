@@ -12,11 +12,9 @@ NEW_SHARKS <- read.csv("~/Desktop/EMERGENT WORKS/SHARKS/Datasets/NEW GSAF5.csv")
 Post_1958<- NEW_SHARKS %>%
   filter(Year >1958 & Year <2018)
 
-#Use USA_Rate to define Group by Incidents per year since 1958 in USA
-USA_Rate<- filter(Post_1958, Country == "USA")
-
-#Isolate Rate further
-USA_by_Year <- USA_Rate %>%
+#Isolate USA
+USA_by_Year <- Post_1958 %>%
+  filter(Country == "USA") %>% 
   group_by(Year) %>% 
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents))
@@ -27,10 +25,11 @@ ggplot(USA_by_Year, aes(x=Year, y=Incidents)) +
   ggtitle("Rate of shark encounters in US 1958-2017")
 
 #Isolate California only
-Cali_incidents<- filter(Post_1958, Area== "California")
+Cali_incidents<- Post_1958 %>% 
+  filter(Area == "California")
 
 #Isolate Cali Rate further
-Cali_Rate<- Cali_incidents %>%
+Cali_Rate<- Cali_incidents %>% 
   group_by(Year) %>% 
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents))

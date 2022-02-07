@@ -20,8 +20,6 @@ Filtered_Cali_Post_1997 <- Post_1997_Cali %>%
             Avg_Age = mean(Age_Number, na.rm = TRUE)) %>% 
   mutate(Avg_Age_Rounded = round(Avg_Age, digits = 0))
 
-
-
 #Circular bar plot: starts with labeling the bars:
 
 label_data <- Filtered_Cali_Post_1997

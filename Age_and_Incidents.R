@@ -1,5 +1,4 @@
 
-#Does age have any significance in shark incidents????
 #Average age of victims in USA EACH YEAR from 1998-2017
 #Average age of victims in top 10 Countries from 1998-2017
 
@@ -109,6 +108,10 @@ geom_text(data=label_data, aes(x=Year, y=Avg_Age_Rounded+2, label= paste(Year,
 
 ggsave(file="Average_Age_of_Shark_Attack_Victims_in_US_1998_2017_Circular_Bar.svg", 
        width=15, height=15)
+
+
+##################################################################################################
+
 
 #What is the avg age of shark attack victims of the Top 10 Countries in the last 20 years?
 # Add Age_Number column
