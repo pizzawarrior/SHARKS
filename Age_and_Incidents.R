@@ -134,10 +134,13 @@ Filtered_World_Last_20_Years <- World_Last_20_Years %>%
 
 #Circular Bar Plot World Top 10 Avg Age:
 id_Filtered_World_20_Yrs<- Filtered_World_Last_20_Years %>% 
-  rowid_to_column(var='id')
+  ## ggplot automatically sorts bars alphabetically for non-numeric x-axis
+  ## in order to get labels in the right angle, need to calculate angles based on alphabetically sorted dataframe
+  arrange(Country) %>%
+  rowid_to_column(var='id') 
 
-label_data2 <- id_Filtered_World_20_Yrs
-
+label_data2 <- id_Filtered_World_20_Yrs 
+ 
 # calculate the ANGLE of the labels
 number_of_bar2 <- nrow(label_data2)
 angle <-  90 - 360 * (label_data2$id-0.5) /number_of_bar2
@@ -171,7 +174,7 @@ ggplot(id_Filtered_World_20_Yrs, aes(x=Country, y=Avg_Age_Rounded)) +
   #Add labels to columns, prepare data:
   geom_text(data=label_data2, aes(x=Country, y=Avg_Age_Rounded+2, 
         label= paste(Country, "\n", Avg_Age_Rounded, "yrs old"), 
-    hjust=hjust), color="black", fontface="bold",alpha=0.6, 
+        hjust=hjust), color="black", fontface="bold",alpha=0.6, 
             size=2.5, angle= label_data2$angle, inherit.aes = FALSE)
 
 ggsave(file="Average_Age_of_Shark_Attack_Victims_in_WORLD_1998_2017_Circular_Bar.svg", 
