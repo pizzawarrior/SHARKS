@@ -17,8 +17,6 @@ Cali_Beaches_Age_Number_1959_2018<- Cali_Beaches %>%
 mean(Cali_Beaches_Age_Number_1959_2018$Age_Number, na.rm = TRUE)
 #[1] 32.85366
 
-########################################################################################
-
 #Summarize Fatal vs Non Fatal Incidents
 Cali_Total_Incidents <- Cali_Beaches %>% 
   summarise(Incidents=n())
@@ -33,23 +31,12 @@ Cali_Fatal_Non_Fatal <- Cali_Beaches %>%
 target <- c("Y", "N")
 Cali_Fatal_Y_N <- filter(Cali_Fatal_Non_Fatal, Fatal..Y.N. %in% target)
 
-#Let's make a bar plot!! (DO NOT USE::THIS IS NOT THE INFO WE WANT, SEE NOTE ABOVE)
-ggplot(Cali_Fatal_Y_N, aes(x= Fatal..Y.N., y= Incidents)) + 
-  geom_bar(stat = "identity", width=0.5) +
-  ggtitle("California 1959-2018 Shark Incidents")
+# Basic piechart
+ggplot(Cali_Fatal_Y_N, aes(x="", y=Incidents, fill=Fatal..Y.N.)) +
+  geom_bar(stat="identity", width=1, color="white") + #white is for the border around the triangle shape
+  coord_polar("y", start=0) +
+  theme_void() + # remove background, grid, numeric labels
+  ggtitle("Cali_17_Fatals_215_Non_Fatals_1959_2018_Pie")
 
-ggsave(file="Cali_Fatal_vs_Non_1959_2018.svg",  
-       width=15, height=8)
-
-#Would a pie chart be better?
-Cali_Fatal_Y_N_Pie<- Cali_Fatal_Y_N %>% 
-  select(Incidents)
-
-#WORTHLESS: (Can not save, not a gg object)
-pie(Cali_Fatal_Y_N_Pie$Incidents , labels = c("Non Fatal", "Fatal"))
-
-
-
-
-
+ggsave("Cali_Fatal_Non_Fatal_Incidents_1959_2018_Pie.svg", width = 15, height = 8)
 
