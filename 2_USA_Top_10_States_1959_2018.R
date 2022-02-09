@@ -20,13 +20,6 @@ USA_States <- Post_1958 %>%
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents))
 
-#Plot Top 10 Beaches AND County
-ggplot(Top_10_States, aes(x = reorder(Area, +Incidents), y = Incidents)) +
-  geom_bar(position="dodge", stat="identity") + 
-  theme(axis.text.x = element_text(angle = 47, vjust = 1, hjust=1)) +
-  ggtitle("Top 10 States by Number of Shark Encounters, 
-          1959-2018")
-
 #HEXBINNNNNNN!!!!!
 # Load this file. (Note: I stored in a folder called DATA)
 spdf <- geojson_read("/Users/ME/First-Repo/us_states_hexgrid.geojson",  what = "sp")
