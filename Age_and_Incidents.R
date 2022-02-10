@@ -61,8 +61,11 @@ ggplot(Filtered_USA_Last_20_Years, aes(x=Year, y=Avg_Age_Rounded)) +
 ggsave(file="Average_Age_of_Shark_Attack_Victims_in_US_1998_2017_Lolipop.svg", 
        width=15, height=8)
 
-#Circular bar plot: starts with labeling the bars:
 
+
+
+
+#Circular bar plot: starts with labeling the bars:
 label_data <- Filtered_USA_Last_20_Years
 
 # calculate the ANGLE of the labels

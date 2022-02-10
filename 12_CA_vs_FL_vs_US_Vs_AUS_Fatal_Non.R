@@ -17,9 +17,11 @@ Cali_Fatal_Non_Fatal <- Cali_Beaches %>%
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents))
 
-#Get rid of blank row: (THIS DISPLAYS Y VS N, BUT WE WANT TOTAL INCIDENTS (218) VS Y (14))
+#Get rid of blank row: 
 target <- c("Y", "N")
-Cali_Fatal_Y_N <- filter(Cali_Fatal_Non_Fatal, Fatal..Y.N. %in% target)
+
+Cali_Fatal_Y_N <- filter(Cali_Fatal_Non_Fatal, Fatal..Y.N. %in% target)%>% 
+  mutate(Loc= "California")
 
 
 #Read in new data for FL, USA, and AUS
@@ -36,23 +38,24 @@ Post_1958_FL_Fatal_Non <- Post_1958_FL %>%
   arrange(desc(Incidents))
 
 #Get rid of blank row:
-FL_Fatal_Y_N <- filter(Post_1958_FL_Fatal_Non, Fatal..Y.N. %in% target)
+FL_Fatal_Y_N <- filter(Post_1958_FL_Fatal_Non, Fatal..Y.N. %in% target) %>% 
+  mutate(Loc= "Florida")
 
 
-#USA, Define parameters
-Post_1958_USA<- NEW_SHARKS %>%
-  filter(Year >1958 & Year <2018, Country == "USA")
+#SOUTH AFRICA, Define parameters
+Post_1958_South_Africa<- NEW_SHARKS %>%
+  filter(Year >1958 & Year <2018, Country == "SOUTH AFRICA")
 
-#Inverse select to get rid of CA
-Post_1958_USA_Minus_CA<- Post_1958_USA %>% 
-  filter(Area != "California") %>% 
+#Filter
+Post_1958_SA<- Post_1958_South_Africa %>% 
   group_by(Fatal..Y.N.) %>% 
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents))
 
-#Clean unresolved data
-USA_Minus_Cali_Fatal_Y_N <- filter(Post_1958_USA_Minus_CA, Fatal..Y.N. %in% target)
-
+#Clean unresolved data, add column identifier for plot
+Post_1958_SA_Cleaned <- filter(Post_1958_SA, 
+  Fatal..Y.N. %in% target) %>% 
+  mutate(Loc= "South Africa")
 
 #Let's try AUS
 Post_1958_AUS<- NEW_SHARKS %>%
@@ -62,8 +65,15 @@ Post_1958_AUS<- NEW_SHARKS %>%
   arrange(desc(Incidents))
 
 #Clean unresolved data
-AUS_Fatal_Y_N <- filter(Post_1958_AUS, Fatal..Y.N. %in% target)
+AUS_Fatal_Y_N <- filter(Post_1958_AUS, Fatal..Y.N. %in% target)%>% 
+  mutate(Loc= "Australia")
 
+#BINDROWS
+Target_Fatal_Loc<- bind_rows(Cali_Fatal_Y_N, FL_Fatal_Y_N, AUS_Fatal_Y_N, Post_1958_SA_Cleaned)
 
-#We now have 4 separate data frames to work with.
-#What do we do next????
+# Stacked
+ggplot(Target_Fatal_Loc, aes(fill=Fatal..Y.N., y=Incidents, x=Loc)) + 
+  geom_bar(position="stack", stat="identity")
+
+#Save plot
+ggsave(file="CA_vs_FL_vs_AUS_vs_SA_Stacked_Barplot.svg", width=15, height=8)
