@@ -89,3 +89,24 @@ Cali_vs_Fl_vs_USA %>%
 
 ggsave(file="Rate_of_shark_encounters_California_vs_Florida_vs_USA_1958-2017.svg", 
        width=15, height=8)
+
+Census<- read_csv("~/Desktop/apportionment.csv")
+
+Filtered_Census<- Census %>% 
+  filter(Name %in% c("California" , "Florida" , "United States")) %>% 
+  select(Name, Year, "Resident Population")
+
+#Specify variable name around United States using ``
+Wide_Census<- Filtered_Census %>% 
+  spread(Name, "Resident Population") %>% 
+  mutate(USA = `United States`- California - Florida)
+
+Long_Census<- Wide_Census %>% 
+  gather("USA", "California", "Florida", key = State, value = Population) %>% 
+  select(-`United States`)
+
+Joined_Data<- Cali_vs_Fl_vs_USA %>% 
+  mutate(Rounded_Year = round())
+  left_join(Long_Census, by = c("Year" = "Year", "Loc" = "State"))
+  
+
