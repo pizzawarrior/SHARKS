@@ -17,6 +17,9 @@ Cali_Beaches_Age_Number_1959_2018<- Cali_Beaches %>%
 mean(Cali_Beaches_Age_Number_1959_2018$Age_Number, na.rm = TRUE)
 #[1] 32.85366
 
+##########################################
+
+
 #Summarize Fatal vs Non Fatal Incidents
 Cali_Total_Incidents <- Cali_Beaches %>% 
   summarise(Incidents=n())

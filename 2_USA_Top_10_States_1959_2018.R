@@ -1,4 +1,5 @@
 #Top 10 states in USA by incident, 1959-2018
+#Hexbin plot
 
 library(tidyverse)
 library(svglite)
@@ -21,7 +22,7 @@ USA_States <- Post_1958 %>%
   arrange(desc(Incidents))
 
 #HEXBINNNNNNN!!!!!
-# Load this file. (Note: I stored in a folder called DATA)
+# Load this file
 spdf <- geojson_read("/Users/ME/First-Repo/us_states_hexgrid.geojson",  what = "sp")
 
 # Bit of reformating
@@ -42,7 +43,8 @@ centers <- cbind.data.frame(data.frame(gCentroid(spdf, byid=TRUE), id=spdf@data$
 
 # Now I can plot this shape easily as described before:
 ggplot() +
-  geom_polygon(data = spdf_fortified, aes( x = long, y = lat, group = group), fill="skyblue", color="white") +
+  geom_polygon(data = spdf_fortified, aes( x = long, y = lat, group = group), 
+      fill="skyblue", color="white") +
   geom_text(data=centers, aes(x=x, y=y, label=id)) +
   theme_void() +
   coord_map()
@@ -53,7 +55,8 @@ spdf_fortified <- spdf_fortified %>%
 
 # Make a first chloropleth map
 ggplot() +
-  geom_polygon(data = spdf_fortified, aes(fill =  Incidents, x = long, y = lat, group = group)) +
+  geom_polygon(data = spdf_fortified, aes(fill =  Incidents, x = long, 
+      y = lat, group = group)) +
   scale_fill_gradient() +
   theme_void() +
   coord_map()
@@ -82,8 +85,11 @@ fill_map1_vector= c("More than 250",
 
 # plot
 ggplot() +
-  geom_polygon(data = spdf_fortified, aes(fill = bin, x = long, y = lat, group = group) , size=1, alpha=0.9 , color="white") +
-  geom_text(data=centers, aes(x=x, y=y, label=id), color="black", size=5, alpha=0.6) +
+  geom_polygon(data = spdf_fortified, aes(fill = bin, 
+        x = long, y = lat, group = group) , 
+        size=1, alpha=0.9 , color="white") +
+  geom_text(data=centers, aes(x=x, y=y, label=id), color="black", 
+        size=5, alpha=0.6) +
   theme_void() +
   scale_fill_manual(
     values = fill_map1, 
@@ -95,6 +101,10 @@ ggplot() +
     legend.position = "right",
     legend.title = element_blank(),
     text = element_text(color = "#22211d"),
-    plot.title = element_text(size= 22, hjust=0.5, color = "#4e4d47", margin = margin(b = -0.1, t = 0.4, l = 2, unit = "cm")))
+    plot.title = element_text(size= 22, hjust=0.5, color = "#4e4d47", 
+        margin = margin(b = -0.1, t = 0.4, l = 2, unit = "cm")))
 
 ggsave(file="USA_Top_States_Hexbin.svg", width=15, height=8)
+
+#Give credit to GitHub user https://github.com/holtzy
+#Plot copied from: https://github.com/holtzy/R-graph-gallery/blob/master/328-hexbin-map-of-the-usa.Rmd

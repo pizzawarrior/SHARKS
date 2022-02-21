@@ -1,24 +1,20 @@
 
 #Line Plot California Rate vs Florida Rate vs Rest of USA 1958-2017
 
+#Calculate per capita rate for same locations and line plot that instead!!!!
+
 library(tidyverse)
 library(svglite)
 library(plotly)
 
 NEW_SHARKS <- read.csv("~/Desktop/EMERGENT WORKS/SHARKS/Datasets/NEW GSAF5.csv")
 
-#Filter Post_1958 to 2017 due to inconclusive data from 2018 on
+#Filter 1958 to 2018, by USA
 Post_1958<- NEW_SHARKS %>%
-  filter(Year >1958 & Year <2018)
-
-#Use Rate to define Group by Incidents per year since 1958 in USA
-USA_Rate<- filter(Post_1958, Country == "USA")
+  filter(Year >1958 & Year <2018, Country == "USA")
 
 #Isolate California only
-Cali_incidents<- filter(Post_1958, Area== "California")
-
-#Isolate Cali Rate: Group by year, summarize incidents
-Cali_Rate<- Cali_incidents %>%
+Cali_Rate<- filter(Post_1958, Area== "California") %>% 
   group_by(Year) %>% 
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents))
@@ -29,10 +25,7 @@ ggplot(Cali_Rate, aes(x=Year, y=Incidents)) +
   ggtitle("Rate of shark encounters in California 1958-2017")
 
 #Isolate Florida only
-Fl_incidents<- filter(Post_1958, Area== "Florida")
-
-#Isolate Fl Rate: Group by year, summarize incidents
-Fl_Rate<- Fl_incidents %>%
+Fl_Rate<- filter(Post_1958, Area== "Florida") %>% 
   group_by(Year) %>% 
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents))
@@ -65,21 +58,16 @@ ggsave(file="Rate_of_shark_encounters_California_vs_Florida_1958-2017.svg",
 #Add Rest of USA to Florida/ Cali Rate for plot
 
 #Filter (remove) California and Florida from USA,reverse condition logic using !
-Filtered_USA_Rate2<- USA_Rate %>%
-  filter(!Area %in% c("California", "Florida"))
-
-#Isolate further
-USA_minus_Cali_Florida<- Filtered_USA_Rate2 %>% 
+#Create new variable, Loc= USA to combine with Cali for plot
+USA_minus_Cali_Florida<- USA_Rate %>%
+  filter(!Area %in% c("California", "Florida")) %>% 
   group_by(Year) %>% 
   summarise(Incidents=n()) %>% 
-  arrange(desc(Incidents))
-
-#Create new variable, Loc= USA to combine with Cali for plot
-Final_USA2<- USA_minus_Cali_Florida %>% 
+  arrange(desc(Incidents)) %>% 
   mutate(Loc= "USA")
-
+  
 #Combine data frames using bind_rows
-Cali_vs_Fl_vs_USA<- bind_rows(Cali_vs_Florida_Rate, Final_USA2)
+Cali_vs_Fl_vs_USA<- bind_rows(Cali_vs_Florida_Rate, USA_minus_Cali_Florida)
 
 #Multi-Line Plot!!!!!!!!!
 Cali_vs_Fl_vs_USA %>%
@@ -90,7 +78,11 @@ Cali_vs_Fl_vs_USA %>%
 ggsave(file="Rate_of_shark_encounters_California_vs_Florida_vs_USA_1958-2017.svg", 
        width=15, height=8)
 
-Census<- read_csv("~/Desktop/apportionment.csv")
+#############################################################################################
+
+#Let's Census!!!!!
+
+Census<- read_csv("~/First-Repo/apportionment.csv")
 
 Filtered_Census<- Census %>% 
   filter(Name %in% c("California" , "Florida" , "United States")) %>% 
@@ -101,12 +93,37 @@ Wide_Census<- Filtered_Census %>%
   spread(Name, "Resident Population") %>% 
   mutate(USA = `United States`- California - Florida)
 
+#Convert long data to wide data
 Long_Census<- Wide_Census %>% 
   gather("USA", "California", "Florida", key = State, value = Population) %>% 
   select(-`United States`)
 
-Joined_Data<- Cali_vs_Fl_vs_USA %>% 
-  mutate(Rounded_Year = round())
-  left_join(Long_Census, by = c("Year" = "Year", "Loc" = "State"))
-  
+#Round dates to nearest 10
+Round_data<- Cali_vs_Fl_vs_USA %>% 
+  mutate(Rounded_Year = round(Year, -1))
+
+#Summarize incidents according to year, join data frames!!!
+Summed_data<- Round_data %>%
+  group_by(Loc, Rounded_Year) %>% 
+  summarise(sum_Incidents = sum(Incidents)) %>% 
+  left_join(Long_Census, by = c("Rounded_Year" = "Year", "Loc" = "State"))
+
+#Override default of using scientific notation in subsequent calls:
+options(scipen = 100)
+
+#Produce per capita rate
+Per_capita<- Summed_data %>%
+  mutate(Rate = sum_Incidents/Population) %>% 
+  select(Loc, Rounded_Year, Rate)
+ 
+#Multi-Line Plot!!!!!!!!!
+Per_capita %>%
+  ggplot( aes(x=Rounded_Year, y=Rate, group=Loc, color=Loc)) +
+  geom_line() +
+  ggtitle("Rate of Per Capita encounters CA FL USA_1958-2017")
+
+ggsave(file="Rate_of_per_capita_encounters_CA_FL_USA_1958-2017.svg", 
+       width=15, height=8)
+
+
 

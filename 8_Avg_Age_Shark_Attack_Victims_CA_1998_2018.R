@@ -13,6 +13,10 @@ Post_1997_Cali<- NEW_SHARKS %>%
   Area == "California") %>% 
   mutate(Age_Number = as.numeric(Age))
 
+#What is the avg age?
+mean(Post_1997_Cali$Age_Number, na.rm = TRUE)
+#[1] 35.43662
+
 Filtered_Cali_Post_1997 <- Post_1997_Cali %>% 
   select(Year, Age_Number) %>% 
   group_by(Year) %>% 
@@ -27,7 +31,8 @@ label_data <- Filtered_Cali_Post_1997
 # calculate the ANGLE of the labels
 number_of_bar <- nrow(label_data)
 angle <-  90 - 360 * (label_data$Year-1997.5) /number_of_bar  
-# I substract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)
+# I substract 0.5 because the letter must have the angle of the center of the bars. 
+#Not extreme right(1) or extreme left (0)
 
 # calculate the alignment of labels: right or left
 # If I am on the left part of the plot, my labels have currently an angle < -90
