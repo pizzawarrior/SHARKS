@@ -1,4 +1,4 @@
-#Time of year/ season, Bubble plot? 
+#Time of year/ season, HEAT MAP
 
 library(tidyverse)
 library(lubridate)
@@ -55,8 +55,7 @@ ggplot(df_minus_year,aes(wday,month,fill=Incidents))+
   geom_tile(color= "white",size=0.1) + 
   scale_fill_viridis(name="Incidents",option ="C")
 
-
-
+#Add ons to play with:
 p <-p + facet_grid(year~month)
 p <-p + scale_y_continuous(trans = "reverse", breaks = unique(df$hour))
 p <-p + scale_x_continuous(breaks =c(1,10,20,31))
@@ -73,6 +72,7 @@ p <-p + theme(legend.position = "bottom")+
   theme(legend.text=element_text(size=6))+
   removeGrid()#ggExtra
 
-
+ggsave(file="Days_of_Incidents_CA_Heatmap.svg", 
+       width=15, height=8)
 
 

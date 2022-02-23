@@ -8,11 +8,13 @@ library(plotly)
 
 #Density plot libraries:
 library(ggplot2)
-install.packages(hrbrthemes)######Unsuccessful
 library(hrbrthemes)
 library(dplyr)
 library(tidyr)
 library(viridis)
+library(ggridges)
+install.packages("ggridges")
+library(ggridges)
 
 #Read in Data
 Cali_Incidents<- read.csv("~/First-Repo/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
@@ -59,14 +61,21 @@ Red_Triangle_Incidents<- Red_Triangle_Non %>%
   group_by(Year, Red_Triangle) %>% 
   summarise(sum_Incidents = sum(Incidents))
 
+# basic example
+ggplot(Red_Triangle_Incidents, aes(x = Year, y = Red_Triangle, height = sum_Incidents, 
+          group = Red_Triangle, fill = Red_Triangle)) + 
+  geom_ridgeline(alpha = 0.5)
 
-#Let's DENSITY plot:
-Red_Triangle_Incidents %>%
-  ggplot( aes(x=Year, color=Red_Triangle, fill=Red_Triangle)) +
-  geom_density(alpha=0.6) +
-  scale_fill_viridis(discrete=TRUE) +
-  scale_color_viridis(discrete=TRUE) +
-  theme_ipsum() +
-  theme(legend.position="none")
+#FACET WRAP PARTY::::
+ggplot(Red_Triangle_Incidents, aes(x=Year, y=sum_Incidents, fill = Red_Triangle))+
+  #play with alpha size
+  geom_bar(stat='identity', alpha = 0.7)+
+  #play with span size
+  geom_smooth(span = 0.7)+
+  facet_wrap(~Red_Triangle,  ncol=1)
 
-#What's going on here with the DENSITY?????
+#load into Figma, flip Red Triangle on its head and bring in closer to 0 line 
+#like a pyramid plot!!!!!!!!!
+
+ggsave(file="CA_Red_Triangle_Non_Facet_Bar.svg", 
+       width=15, height=8)

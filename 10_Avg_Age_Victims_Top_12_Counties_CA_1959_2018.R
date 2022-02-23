@@ -43,17 +43,4 @@ ggplot(Filtered_Cali_Beaches_1959_2018, aes(x=County, y=Avg_Age_Rounded)) +
 ggsave(file="Avg_Age_of_Victims_Top_12_Counties_in_CA_1959_2018.svg", 
        width=15, height=8)
 
-#Let's turn this into a pie chart!!!!
-Cali_Pie<- Filtered_Cali_Beaches_1959_2018 %>%
-  select(County, Incidents)
 
-#Plot it mannnnnnn
-ggplot(Cali_Pie, aes(x="", y=Incidents, fill=County)) +
-  geom_bar(stat="identity", width=1, color="white") + #white is for the border around the triangle shape
-  coord_polar("y", start=0) +
-  theme_void() + # remove background, grid, numeric labels
-  ggtitle("Cali Top 12 Counties 1959-2018 Pie")
-
-#Save plot
-ggsave(file="CA_Top_12_Counties_by_Incident_1959_2018.svg", 
-       width=15, height=8)
