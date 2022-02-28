@@ -35,13 +35,12 @@ out_df %>%
 ## make sure there's nothing crazy unexpected here
 summary(out_df$clean_date)
 
-#Remove year
+#Remove year, change to day, weekday
 df_minus_year<- out_df %>% 
   mutate(month = month(clean_date), 
          day = day(clean_date), 
          wday = wday(clean_date))
       
-
 df_minus_year<- df_minus_year %>% 
   group_by(month, wday) %>% 
 #ADD LOCATION LATER!!!!!
@@ -52,8 +51,20 @@ df_minus_year<- df_minus_year %>%
 
 ######## Plotting starts here#####################
 ggplot(df_minus_year,aes(wday,month,fill=Incidents))+
-  geom_tile(color= "white",size=0.1) + 
-  scale_fill_viridis(name="Incidents",option ="C")
+  geom_tile(color= "white",size= 2) + 
+  scale_fill_viridis(name="Incidents",option ="C")+ 
+  coord_equal()+
+  theme_classic()
+
+ggsave(file="Days_of_Incidents_CA_Heatmap2.svg", 
+       width=15, height=8)
+
+
++
+  theme_minimal(base_size = 8)
+    
+  theme(legend.position = "bottom")
+  
 
 #Add ons to play with:
 p <-p + facet_grid(year~month)
