@@ -6,7 +6,7 @@ library(svglite)
 library(ggplot2)
 
 #read in filtered dataset of 1958-2018 Cali Beaches
-Cali_Beaches<- read.csv("~/First-Repo/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
+Cali_Beaches<- read.csv("~/First-Repo/data/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
 
 #Add age as numeric column
 Cali_Beaches_Age_Number_1959_2018<- Cali_Beaches %>% 

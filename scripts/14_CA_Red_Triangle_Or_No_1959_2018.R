@@ -17,7 +17,7 @@ install.packages("ggridges")
 library(ggridges)
 
 #Read in Data
-Cali_Incidents<- read.csv("~/First-Repo/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
+Cali_Incidents<- read.csv("~/First-Repo/data/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
 
 #Separate Beach/ County column:
 #NOTE the comma separator also has a space after it to omit the WHITE SPACE 

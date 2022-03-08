@@ -4,7 +4,7 @@ library(tidyverse)
 library(lubridate)
 library(viridis)
 
-raw_df <- read_csv("GSAF5-Cali_Post_1958-2017_BEACHES.csv" )
+raw_df <- read_csv("~/First-Repo/data/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
 head(raw_df$Date)
 
 test_df <- raw_df %>% 

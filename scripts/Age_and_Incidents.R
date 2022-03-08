@@ -7,7 +7,7 @@ library(svglite)
 library(plotly)
 
 #Read in Data
-NEW_SHARKS <- read.csv("~/Desktop/EMERGENT WORKS/SHARKS/Datasets/NEW GSAF5.csv")
+NEW_SHARKS <- read.csv("~/First-Repo/data/GSAF5.csv")
 
 #Filter Post_1958 to 2017 due to inconclusive data from 2018 on
 Post_1958<- NEW_SHARKS %>%
@@ -63,8 +63,6 @@ ggsave(file="Average_Age_of_Shark_Attack_Victims_in_US_1998_2017_Lolipop.svg",
 
 
 
-
-
 #Circular bar plot: starts with labeling the bars:
 label_data <- Filtered_USA_Last_20_Years
 
@@ -113,7 +111,7 @@ ggsave(file="Average_Age_of_Shark_Attack_Victims_in_US_1998_2017_Circular_Bar.sv
        width=15, height=15)
 
 
-##################################################################################################
+################################################################################
 
 
 #What is the avg age of shark attack victims of the Top 10 Countries in the last 20 years?

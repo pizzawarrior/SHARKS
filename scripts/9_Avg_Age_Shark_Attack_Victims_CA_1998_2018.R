@@ -5,7 +5,7 @@ library(svglite)
 library(plotly)
 
 #Read in Data
-NEW_SHARKS <- read.csv("~/Desktop/EMERGENT WORKS/SHARKS/Datasets/NEW GSAF5.csv")
+NEW_SHARKS <- read.csv("~/First-Repo/data/GSAF5.csv")
 
 #Filter to desired years, select Cali, add age column so they register as numeric
 Post_1997_Cali<- NEW_SHARKS %>%

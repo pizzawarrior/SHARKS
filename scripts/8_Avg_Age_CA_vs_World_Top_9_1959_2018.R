@@ -5,7 +5,7 @@ library(svglite)
 library(plotly)
 
 #Read in Data
-NEW_SHARKS <- read.csv("~/Desktop/EMERGENT WORKS/SHARKS/Datasets/NEW GSAF5.csv")
+NEW_SHARKS <- read.csv("~/First-Repo/data/GSAF5.csv")
 
 #Group Cali and Florida data sets with Countries: Conditional mutate dplyr
 Cali_Countries<- NEW_SHARKS %>% 
