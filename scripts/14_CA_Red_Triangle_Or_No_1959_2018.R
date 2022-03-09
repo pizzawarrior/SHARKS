@@ -43,7 +43,6 @@ Red_Triangle_New_Column<- Cali_Counties_Filtered %>%
         yes= "Red Triangle", no= "Non")) %>% 
         arrange(Red_Triangle)
 
-
 #Let's try a density chart, but we need different data:
 #Arrange by year, county, summarize incidents
 Cali_Counties <- Cali_Separated %>%

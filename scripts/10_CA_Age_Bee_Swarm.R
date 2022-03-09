@@ -28,15 +28,11 @@ Cali_Age<- Cali_Beaches_1959_2018 %>%
   filter(Age_Number != "NA") %>% 
   mutate(test = "test")
 
-
 # Basic beeswarm plot in ggplot2
 ggplot(Cali_Age, aes(x = test, y = Age_Number)) +
   geom_jitter(width = 0.1, height = 0.1)
 
 ?geom_jitter
-
-
-
 
 #Bee swarm plot
 beeswarm(Cali_Age)

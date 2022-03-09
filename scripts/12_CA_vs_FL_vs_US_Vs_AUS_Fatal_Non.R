@@ -40,7 +40,6 @@ Post_1958_FL_Fatal_Non <- Post_1958_FL %>%
 FL_Fatal_Y_N <- filter(Post_1958_FL_Fatal_Non, Fatal..Y.N. %in% target) %>% 
   mutate(Loc= "Florida")
 
-
 #SOUTH AFRICA, Define parameters
 Post_1958_South_Africa<- NEW_SHARKS %>%
   filter(Year >1958 & Year <2018, Country == "SOUTH AFRICA")

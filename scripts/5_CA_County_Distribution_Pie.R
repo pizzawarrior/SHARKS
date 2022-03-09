@@ -25,38 +25,26 @@ Filtered_Cali_Beaches_1959_2018 <- Cali_Beaches_and_Counties_Separated %>%
   select(County) %>% 
   group_by(County) %>% 
   summarise(Incidents = n()) %>% 
+  filter(!is.na(County)) %>% 
   arrange(desc(Incidents))
-
 
 #Can we do anything with this??? (Vector help???)
 Other_Counties<- c("Ventura", "Mendocino", "Del Norte")
 
-#Let'screate new column for 'OTHER' counties
-#Caveman style:
-County_flag<- Filtered_Cali_Beaches_1959_2018 %>% 
-  mutate(County_flag= 
-    ifelse(test =  County == "Marin", yes ="Marin", 
-    ifelse(test =  County == "Sonoma", yes = "Sonoma", 
-    ifelse(test =  County == "Humboldt", yes = "Humboldt", 
-    ifelse(test =  County == "Los Angeles", yes = "Los Angeles", 
-    ifelse(test =  County == "Santa Barbara", yes = "Santa Barbara", 
-    ifelse(test =  County == "San Luis Obispo", yes = "San Luis Obispo", 
-    ifelse(test =  County == "Monterey", yes = "Monterey", 
-    ifelse(test =  County == "Orange County", yes = "Orange County", 
-    ifelse(test =  County == "San Francisco", yes = "San Francisco", 
-    ifelse(test =  County == "San Mateo", yes = "San Mateo", 
-    ifelse(test =  County == "Santa Cruz", yes = "Santa Cruz", 
-    ifelse(test =  County == "San Diego", yes = "San Diego", 
-    no = "Other"))))))))))))) %>% 
-  filter(!is.na(County))
+#New county column combining "other" counties
+Other_County_Flag<- Filtered_Cali_Beaches_1959_2018 %>% 
+  mutate(Other= 
+           ifelse(County %in% Other_Counties,
+            yes= "Other", no= County))
 
 #Combine 'Other' incidents:
-County_flag_sum<- County_flag %>% 
-  group_by(County_flag) %>% 
+County_flag_sum<- Other_County_Flag %>% 
+  group_by(Other) %>% 
   summarise(sum_Incidents = sum(Incidents)) %>% 
   arrange(desc(sum_Incidents))
 
-ggplot(County_flag_sum, aes(x="", y=sum_Incidents, fill=County_flag)) +
+#PLOT PARTY!
+ggplot(County_flag_sum, aes(x="", y=sum_Incidents, fill=Other)) +
   geom_bar(stat="identity", width=1, color="white") + #white is for the border around the triangle shape
   coord_polar("y", start=0) +
   theme_void() + # remove background, grid, numeric labels

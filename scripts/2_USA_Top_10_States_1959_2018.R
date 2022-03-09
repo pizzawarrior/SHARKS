@@ -63,11 +63,11 @@ ggplot() +
 
 spdf_fortified<- spdf_fortified %>% 
   mutate(bin = case_when(Incidents >= 250 ~ 'More than 250'
-                         ,Incidents >= 200 ~ 'More than 200, less than 250'
-                         ,Incidents >= 100 ~ 'More than 100, less than 200'
-                         ,Incidents >= 50 ~ 'More than 50, less than 100'
-                         ,Incidents >= 0 ~ 'More than 0, less than 50'
-                         ,TRUE ~ 'No reported incidents'))
+            ,Incidents >= 200 ~ 'More than 200, less than 250'
+            ,Incidents >= 100 ~ 'More than 100, less than 200'
+            ,Incidents >= 50 ~ 'More than 50, less than 100'
+            ,Incidents >= 0 ~ 'More than 0, less than 50'
+            ,TRUE ~ 'No reported incidents'))
 
 fill_map1 <- c("More than 250" = "#a50f15",
                "More than 200, less than 250" = "#de2d26", 
