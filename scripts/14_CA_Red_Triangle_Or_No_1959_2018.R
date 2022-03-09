@@ -12,8 +12,7 @@ library(hrbrthemes)
 library(dplyr)
 library(tidyr)
 library(viridis)
-library(ggridges)
-install.packages("ggridges")
+#install.packages("ggridges")
 library(ggridges)
 
 #Read in Data

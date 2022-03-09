@@ -5,18 +5,21 @@ library(lubridate)
 library(viridis)
 
 raw_df <- read_csv("~/First-Repo/data/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
+
 head(raw_df$Date)
+
+?lubridate
 
 test_df <- raw_df %>% 
   ## try built-in date converter function first
   mutate(clean_date = dmy(Date))
 
-# check out dates that failed to parse
+# check out dates that failed to parse, don't need to make new dataframe
 test_df %>%
   filter(is.na(clean_date)) %>%
   select(Date, clean_date)
 
-# manually fix those ones
+# manually fix those dates
 out_df <- test_df %>%
   mutate(clean_date = case_when(
     Date == "Aug-1995" ~ as.Date("1995-08-01"),
@@ -52,37 +55,38 @@ class(df_minus_year$wday)
 #Let's try replace:
 #(IS THERE AN EASIER WAY TO DO THIS???)
 df_minus_year_shifted<- df_minus_year %>%
-  mutate(new_day= replace(wday, wday == 1, 8)) %>% 
+  mutate(new_day= replace(wday, wday == 1, 8))
+
+#To flip how months appear on plot:
+%>% 
   mutate(new_month=
-          (ifelse(test =  month == "12", yes ="1", 
-          (ifelse(test =  month == "11", yes ="2", 
-          (ifelse(test =  month == "10", yes ="3",
-          (ifelse(test =  month == "9", yes ="4",
-          (ifelse(test =  month == "8", yes ="5",
-          (ifelse(test =  month == "7", yes ="6",
-          (ifelse(test =  month == "6", yes ="7",
-          (ifelse(test =  month == "5", yes ="8",
-          (ifelse(test =  month == "4", yes ="9",
-          (ifelse(test =  month == "3", yes ="10",
-          (ifelse(test =  month == "2", yes ="11",
-          (ifelse(test =  month == "1", yes ="12",
+          (ifelse(test =  month == 12, yes =1, 
+          (ifelse(test =  month == 11, yes =2, 
+          (ifelse(test =  month == 10, yes =3,
+          (ifelse(test =  month == 9, yes =4,
+          (ifelse(test =  month == 8, yes =5,
+          (ifelse(test =  month == 7, yes =6,
+          (ifelse(test =  month == 6, yes =7,
+          (ifelse(test =  month == 5, yes =8,
+          (ifelse(test =  month == 4, yes =9,
+          (ifelse(test =  month == 3, yes =10,
+          (ifelse(test =  month == 2, yes =11,
+          (ifelse(test =  month == 1, yes =12,
           no = "NA")))))))))))))))))))))))))
 
 #Look how the dates are all rearranged now on plot-- how to vfy what happened here?
 
 ?str_detect
 
-?lubridate
-
 ######## Plotting starts here#####################
-ggplot(df_minus_year_shifted,aes(new_day,new_month,fill=Incidents))+
+ggplot(df_minus_year_shifted,aes(month, new_day, fill=Incidents))+
   geom_tile(color= "white",size= 2) + 
   scale_fill_viridis(name="Incidents",option ="C")+ 
   coord_equal()+
   theme_classic()+
-  ggtitle("Monday= 2, Sunday= 8, December= 1, January= 12")
+  ggtitle("Monday= 2, Sunday= 8")
 
-#ggsave(file="Days_of_Incidents_CA_Heatmap2.svg", width=15, height=8)
+ggsave(file="Days_of_Incidents_CA_Heatmap_REORG_flipped.svg", width=15, height=8)
 
 
 #Add ons to play with:
