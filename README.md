@@ -1,6 +1,7 @@
 
 # SHARKS
 
+### Published portfolio: https://www.iannorstad.com/sharks
 
 An ongoing exploration of shark attacks (encounters/ incidents) from 1959- 2018. The focus is primarily on California, and how the state compares to other high risk areas around the globe. 
 
@@ -18,6 +19,10 @@ ________________________________________________________________________________
 
 Once you have forked or cloned this repository to your computer please verify tidyverse is installed in R studio. 
 
+```
+install.packages("tidyverse")
+```
+
 
 ## Built With
 ______________________________________________________________________________________________________________________________
@@ -30,4 +35,11 @@ ________________________________________________________________________________
 ## Data Source
 ______________________________________________________________________________________________________________________________
 
+(Add in info here about this dataset)
+(I also looked at XYZ other data sets, but they were not selected because..)
 https://www.sharkattackfile.net/incidentlog.htm
+
+## Directory Structure
+* Data folder with data
+* Script file with scripts
+* Prefix corresponds to plot number in portfolio, some are repetetive as works in progress
