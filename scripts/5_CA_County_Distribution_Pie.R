@@ -33,8 +33,7 @@ Other_Counties<- c("Ventura", "Mendocino", "Del Norte")
 
 #New county column combining "other" counties
 Other_County_Flag<- Filtered_Cali_Beaches_1959_2018 %>% 
-  mutate(Other= 
-           ifelse(County %in% Other_Counties,
+  mutate(Other= ifelse(County %in% Other_Counties,
             yes= "Other", no= County))
 
 #Combine 'Other' incidents:
