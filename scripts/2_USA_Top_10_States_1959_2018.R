@@ -21,6 +21,14 @@ USA_States <- Post_1958 %>%
   summarise(Incidents=n()) %>% 
   arrange(desc(Incidents))
 
+#Exercise: US vs Rest of World: What are the numbers?
+Post_1958 %>% 
+  mutate(States= ifelse(test = Area == "Florida" , 
+  yes = "Florida" , no= "other")) %>% 
+  select(States) %>% 
+  group_by(States) %>% 
+  summarise(Incidents=n())
+
 #HEXBINNNNNNN!!!!!
 # Load this file
 spdf <- geojson_read("/Users/ME/First-Repo/us_states_hexgrid.geojson",  what = "sp")
