@@ -29,7 +29,6 @@ ________________________________________________________________________________
 
 * R
 * `tidyverse`
-* `tidycensus`
 
 
 ## Data Source
@@ -38,6 +37,9 @@ ________________________________________________________________________________
 (Add in info here about this dataset)
 (I also looked at XYZ other data sets, but they were not selected because..)
 https://www.sharkattackfile.net/incidentlog.htm
+
+Census data came from here (you do not need an API key:
+https://www.census.gov/programs-surveys/acs/microdata/access.2012.html
 
 ## Directory Structure
 * Data folder with data
