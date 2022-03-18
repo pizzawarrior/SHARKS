@@ -1,4 +1,8 @@
+#We want a heatmap for Red Triangle and one for Non Red Triangle
+
 library(tidyverse)
+library(lubridate)
+library(viridis)
 
 #Read in Data
 Cali_Incidents<- read.csv("~/First-Repo/data/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
@@ -22,6 +26,24 @@ Red_Triangle_column<- Cali_Separated %>%
 #For the first Heatmap: Red Triangle Yes
 Red_Triangle_Yes<- Red_Triangle_column %>% 
   filter(Red_Triangle == "yes")
+
+#Let's work on those dates next:
+Red_Triangle_Yes <-  Red_Triangle_Yes%>% 
+  ## try built-in date converter function first
+  mutate(clean_date = dmy(Date))
+
+Red_Triangle_Yes %>%
+  filter(is.na(clean_date)) %>%
+  select(Date, clean_date)
+
+# manually fix those dates
+Red_Triangle_Yes <- Red_Triangle_Yes %>%
+  mutate(clean_date = case_when(
+    Date == "Aug-1995" ~ as.Date("1995-08-01"),
+    TRUE  ~ clean_date)) %>% 
+  filter(!Date %in% 1986)
+
+summary(Red_Triangle_Yes$clean_date)
 
 #For the second heatmap: Red Triangle NO
 Red_Triangle_No<- Red_Triangle_column %>% 
