@@ -4,7 +4,12 @@ library(tidyverse)
 library(lubridate)
 library(viridis)
 
+#Use this dataset for 1959-2018
 raw_df <- read_csv("~/First-Repo/data/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
+
+#Use this dataset for 1879- 2020
+raw_df <- read.csv("~/First-Repo/data/GSAF5.csv") %>% 
+  filter(Area == "California")
 
 head(raw_df$Date)
 
@@ -19,15 +24,17 @@ test_df %>%
   filter(is.na(clean_date)) %>%
   select(Date, clean_date)
 
-# manually fix those dates
+# manually fix those dates (these depend on which dataset was selected above)
 out_df <- test_df %>%
   mutate(clean_date = case_when(
     Date == "Aug-1995" ~ as.Date("1995-08-01"),
     Date == "Summer of 1996" ~ as.Date("1996-07-01"),
     Date == "Feb-1961" ~ as.Date("1961-02-01"), 
+    Date == "Sep-1906" ~ as.Date("1906-09-01"), 
     Date == "Between 10 and 12-Sep-1959"  ~ as.Date("1959-09-11"),
     TRUE  ~ clean_date)) %>% 
-  filter(!Date %in% c("1984" , "1986", "1965"))
+  filter(!Date %in% c("1984" , "1986", "1965", "1851", "Before 1908", 
+          "No date, Before 1963"))
 
 #Cool Trick!!:
 ## make sure there's nothing crazy unexpected here
@@ -62,9 +69,9 @@ ggplot(df_minus_year_shifted,aes(new_day, month, fill=Incidents))+
   scale_fill_viridis(name="Incidents",option ="C")+ 
   coord_equal()+
   theme_classic()+
-  ggtitle("Monday= 2, Sunday= 8, January= 12")
+  ggtitle("Monday= 2, Sunday= 8, Dec= 12, 1879-2020")
 
-
+#EXERCISE:
 #To flip the months just add a minus in front!!!!!!
 ggplot(df_minus_year_shifted,aes(new_day, -month, fill=Incidents))+
   geom_tile(color= "white",size= 2) + 
@@ -73,7 +80,7 @@ ggplot(df_minus_year_shifted,aes(new_day, -month, fill=Incidents))+
   theme_classic()+
   ggtitle("Monday= 2, Sunday= 8, January= 12")
 
-#ggsave(file="Days_of_Incidents_CA_Heatmap_REORG_flipped.svg", width=15, height=8)
+ggsave(file="Days_of_Incidents_CA_Heatmap_1879_2020.svg", width=15, height=8)
 
 
 #Add ons to play with:

@@ -42,9 +42,14 @@ Red_Triangle_New_Column<- Cali_Counties_Filtered %>%
         yes= "Red Triangle", no= "Non")) %>% 
         arrange(Red_Triangle)
 
-#Let's try a density chart, but we need different data:
-#Arrange by year, county, summarize incidents
-Cali_Counties <- Cali_Separated %>%
+#Let's count:
+Red_Triangle_New_Column %>% 
+  group_by(Red_Triangle) %>% 
+summarise(sum = sum(Incidents))
+ 
+
+#Organize by year, county, summarize incidents
+Cali_Counties<- Cali_Separated %>%
   group_by(Year, County) %>% 
   summarise(Incidents=n()) %>% 
   filter(!is.na(County))
@@ -59,7 +64,25 @@ Red_Triangle_Incidents<- Red_Triangle_Non %>%
   group_by(Year, Red_Triangle) %>% 
   summarise(sum_Incidents = sum(Incidents))
 
-# basic example
+#Simple Multi-Line Plot!
+ggplot(Red_Triangle_Incidents, aes(x=Year, y=sum_Incidents, group=Red_Triangle, color=Red_Triangle)) +
+  geom_line() +
+  ggtitle("Red Triangle vs Non Red Triangle 1959-2018")
+
+#Area plot experiment:
+ggplot(Red_Triangle_Incidents, aes(x=Year, y=sum_Incidents, fill=Red_Triangle)) + 
+      geom_area()
+
+ggsave(file="16.CA_Red_Triangle_Stacked_Area.svg", 
+       width=15, height=8)
+
+#Let's have some pie:
+ggplot(Red_Triangle_Incidents, aes(x="", y=sum_Incidents, fill=Red_Triangle)) +
+  geom_bar(stat="identity", width=1, color="white") +
+  coord_polar("y", start=0) +
+  theme_void() # remove background, grid, numeric labels
+
+#Ridgeline experiment
 ggplot(Red_Triangle_Incidents, aes(x = Year, y = Red_Triangle, height = sum_Incidents, 
           group = Red_Triangle, fill = Red_Triangle)) + 
   geom_ridgeline(alpha = 0.5)
@@ -76,4 +99,19 @@ ggplot(Red_Triangle_Incidents, aes(x=Year, y=sum_Incidents, fill = Red_Triangle)
 #like a pyramid plot!!!!!!!!!
 
 ggsave(file="CA_Red_Triangle_Non_Facet_Bar.svg", 
+       width=15, height=8)
+
+#For a pie chart:
+Red_Triangle_Incidents_Sum<- Red_Triangle_New_Column %>% 
+  group_by(Red_Triangle) %>% 
+  summarise(sum = sum(Incidents))
+
+#Let's have some pie:
+ggplot(Red_Triangle_Incidents_Sum, aes(x="", y=sum, fill=Red_Triangle)) +
+  geom_bar(stat="identity", width=1, color="white") +
+  coord_polar("y", start=0) +
+  theme_void() + # remove background, grid, numeric labels
+  ggtitle("82 Red Triangle vs 162 Non Red Triangle 1959-2018")
+
+ggsave(file="14.CA_Red_Triangle_Non_Pie.svg", 
        width=15, height=8)
