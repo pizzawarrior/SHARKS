@@ -33,7 +33,8 @@ Cali_Counties_Filtered <- Cali_Separated %>%
   filter(!is.na(County))
 
 #Red triangle COMBINE counties:
-Red_Triangle_Counties<- c("Sonoma", "Marin", "San Mateo", "Santa Cruz", "Monterey")
+Red_Triangle_Counties<- c("Sonoma", "Marin", "San Mateo", "Santa Cruz", 
+          "Monterey", "San Francisco")
 
 #Assign counties accordingly, new column, "non"
 Red_Triangle_New_Column<- Cali_Counties_Filtered %>% 
@@ -76,11 +77,6 @@ ggplot(Red_Triangle_Incidents, aes(x=Year, y=sum_Incidents, fill=Red_Triangle)) 
 ggsave(file="16.CA_Red_Triangle_Stacked_Area.svg", 
        width=15, height=8)
 
-#Let's have some pie:
-ggplot(Red_Triangle_Incidents, aes(x="", y=sum_Incidents, fill=Red_Triangle)) +
-  geom_bar(stat="identity", width=1, color="white") +
-  coord_polar("y", start=0) +
-  theme_void() # remove background, grid, numeric labels
 
 #Ridgeline experiment
 ggplot(Red_Triangle_Incidents, aes(x = Year, y = Red_Triangle, height = sum_Incidents, 
@@ -98,7 +94,7 @@ ggplot(Red_Triangle_Incidents, aes(x=Year, y=sum_Incidents, fill = Red_Triangle)
 #load into Figma, flip Red Triangle on its head and bring in closer to 0 line 
 #like a pyramid plot!!!!!!!!!
 
-ggsave(file="CA_Red_Triangle_Non_Facet_Bar.svg", 
+ggsave(file="CA_Red_Triangle_Non_Facet_Bar_CORRECTED.svg", 
        width=15, height=8)
 
 #For a pie chart:
