@@ -105,21 +105,21 @@ Socal_minus_year_shifted<- Socal_minus_year %>%
 #Norcal Plot PARTY:
 ggplot(Norcal_minus_year_shifted, aes(new_day, month, fill=Incidents))+
   geom_tile(color= "white",size= 2) + 
-  scale_fill_viridis(name="Incidents",option ="C")+ 
+  scale_fill_viridis(name="Incidents", option ="D")+ 
   coord_equal()+
   theme_classic()+
   ggtitle("Norcal, Mon= 2, Sun= 8, Dec= 12, 1959-2018")
 
-ggsave(file="15.Norcal_Heatmap_1959_2018.svg", 
+ggsave(file="15.Norcal_Heatmap_1959_2018.2.svg", 
        width=15, height=8)
 
 #Plot PARTY:
 ggplot(Socal_minus_year_shifted, aes(new_day, month, fill=Incidents))+
   geom_tile(color= "white",size= 2) + 
-  scale_fill_viridis(name="Incidents",option ="C")+ 
+  scale_fill_viridis(name="Incidents", option ="D")+
   coord_equal()+
   theme_classic()+
   ggtitle("Socal, Mon= 2, Sun= 8, Dec= 12")
 
-ggsave(file="15.Socal_Heatmap_1959_2018.svg", 
+ggsave(file="15.Socal_Heatmap_1959_2018.2.svg", 
        width=15, height=8)
