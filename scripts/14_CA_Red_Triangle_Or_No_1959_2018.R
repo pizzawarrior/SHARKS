@@ -47,7 +47,6 @@ Red_Triangle_New_Column<- Cali_Counties_Filtered %>%
 Red_Triangle_New_Column %>% 
   group_by(Red_Triangle) %>% 
 summarise(sum = sum(Incidents))
- 
 
 #Organize by year, county, summarize incidents
 Cali_Counties<- Cali_Separated %>%
@@ -74,8 +73,7 @@ ggplot(Red_Triangle_Incidents, aes(x=Year, y=sum_Incidents, group=Red_Triangle, 
 ggplot(Red_Triangle_Incidents, aes(x=Year, y=sum_Incidents, fill=Red_Triangle)) + 
       geom_area()
 
-ggsave(file="16.CA_Red_Triangle_Stacked_Area.svg", 
-       width=15, height=8)
+#ggsave(file="16.CA_Red_Triangle_Stacked_Area.svg", width=15, height=8)
 
 
 #Ridgeline experiment
@@ -94,8 +92,7 @@ ggplot(Red_Triangle_Incidents, aes(x=Year, y=sum_Incidents, fill = Red_Triangle)
 #load into Figma, flip Red Triangle on its head and bring in closer to 0 line 
 #like a pyramid plot!!!!!!!!!
 
-ggsave(file="CA_Red_Triangle_Non_Facet_Bar_CORRECTED.svg", 
-       width=15, height=8)
+#ggsave(file="CA_Red_Triangle_Non_Facet_Bar_CORRECTED.svg", width=15, height=8)
 
 #For a pie chart:
 Red_Triangle_Incidents_Sum<- Red_Triangle_New_Column %>% 
@@ -107,7 +104,6 @@ ggplot(Red_Triangle_Incidents_Sum, aes(x="", y=sum, fill=Red_Triangle)) +
   geom_bar(stat="identity", width=1, color="white") +
   coord_polar("y", start=0) +
   theme_void() + # remove background, grid, numeric labels
-  ggtitle("82 Red Triangle vs 162 Non Red Triangle 1959-2018")
+  ggtitle("96 Red Triangle vs 148 Non Red Triangle 1959-2018")
 
-ggsave(file="14.CA_Red_Triangle_Non_Pie.svg", 
-       width=15, height=8)
+#ggsave(file="14.CA_Red_Triangle_Non_Pie.svg", idth=15, height=8)
