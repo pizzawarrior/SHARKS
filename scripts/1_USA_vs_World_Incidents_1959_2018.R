@@ -30,3 +30,8 @@ ggplot(Top_10_Countries, aes(x = reorder(Country, +Incidents), y = Incidents)) +
 
 #Save new plot
 ggsave(file="Sharks_Plot_Top_10_Countries_1958-2017.svg", width=15, height=8)
+
+
+
+
+

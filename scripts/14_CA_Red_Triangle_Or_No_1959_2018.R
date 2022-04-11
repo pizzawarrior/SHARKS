@@ -106,4 +106,4 @@ ggplot(Red_Triangle_Incidents_Sum, aes(x="", y=sum, fill=Red_Triangle)) +
   theme_void() + # remove background, grid, numeric labels
   ggtitle("96 Red Triangle vs 148 Non Red Triangle 1959-2018")
 
-#ggsave(file="14.CA_Red_Triangle_Non_Pie.svg", idth=15, height=8)
+#ggsave(file="14.CA_Red_Triangle_Non_Pie.svg", width=15, height=8)

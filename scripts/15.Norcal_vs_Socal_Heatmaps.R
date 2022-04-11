@@ -14,7 +14,7 @@ Cali_Separated <- Cali_Incidents %>%
   separate(col=Location.and.County..Cleaned., 
            into=c("Beach", "County"), sep=", ")
 
-#Red triangle COMBINE counties:
+#NorCal COMBINE counties:
 Norcal<- c("Sonoma", "Marin", "San Mateo", "Santa Cruz", 
               "Monterey", "San Francisco", "Mendocino", "Humboldt",
            "Del Norte")
@@ -115,7 +115,7 @@ ggplot(Norcal_minus_year_shifted, aes(new_day, month, fill=Incidents))+
 #Plot PARTY:
 ggplot(Socal_minus_year_shifted, aes(new_day, month, fill=Incidents))+
   geom_tile(color= "white",size= 2)+ 
-  scale_fill_viridis(name="Incidents", option ="D",
+  scale_fill_viridis(name="Incidents", option ="D", limits=c(0,12),
 #Let's try to get the legend similar to the one for Norcal:
                      breaks = c(0, 3, 6, 9, 12),
                      labels = c(0, 3, 6, 9, 12))+

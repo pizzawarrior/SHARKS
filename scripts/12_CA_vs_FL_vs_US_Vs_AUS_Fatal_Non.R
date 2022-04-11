@@ -27,7 +27,7 @@ Cali_Fatal_Y_N <- filter(Cali_Fatal_Non_Fatal, Fatal..Y.N. %in% target)%>%
 NEW_SHARKS <- read.csv("~/Desktop/EMERGENT WORKS/SHARKS/Datasets/NEW GSAF5.csv")
 
 #Florida, define parameters:
-Post_1958_FL<- NEW_SHARKS %>%
+Post_1958_FL <- NEW_SHARKS %>%
   filter(Year >1958 & Year <2018, Area == "Florida")
 
 #Refine further
@@ -75,7 +75,7 @@ ggplot(Target_Fatal_Loc, aes(fill=Fatal..Y.N., y=Incidents, x=Loc)) +
   geom_bar(position="stack", stat="identity")
 
 #Save plot
-ggsave(file="CA_vs_FL_vs_AUS_vs_SA_Stacked_Barplot.svg", width=15, height=8)
+#ggsave(file="CA_vs_FL_vs_AUS_vs_SA_Stacked_Barplot.svg", width=15, height=8)
 
 #Now let's pie chart them!
 
