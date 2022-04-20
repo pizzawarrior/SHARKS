@@ -1,13 +1,11 @@
-
+#Test
 #CA age bee swarm plot, 1959- 2018
 
 library(tidyverse)
 library(ggplot2)
 
-install.packages("ggplot2")
-
 #Install ggbeeswarm
-install.packages("ggbeeswarm")
+#install.packages("ggbeeswarm")
 library(ggbeeswarm)
 
 

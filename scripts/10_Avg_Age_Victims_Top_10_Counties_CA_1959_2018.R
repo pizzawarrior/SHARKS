@@ -53,5 +53,5 @@ ggplot(aes(x = County, y = Age_Number)) +
   geom_jitter(width = 0.1, height = 0.1)+
   ggtitle("Shark Attack Victims Ages 12 Counties, CA, 1959-2018")
 
-ggsave("Shark_Attack_Victims_Ages_12_Counties_CA_1959_2018.svg", width = 15, height = 8)
+#ggsave("Shark_Attack_Victims_Ages_12_Counties_CA_1959_2018.svg", width = 15, height = 8)
 

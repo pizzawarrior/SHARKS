@@ -178,7 +178,7 @@ ggplot(id_Filtered_World_20_Yrs, aes(x=Country, y=Avg_Age_Rounded)) +
         hjust=hjust), color="black", fontface="bold",alpha=0.6, 
             size=2.5, angle= label_data2$angle, inherit.aes = FALSE)
 
-ggsave(file="Average_Age_of_Shark_Attack_Victims_in_WORLD_1998_2017_Circular_Bar.svg", 
+#ggsave(file="Average_Age_of_Shark_Attack_Victims_in_WORLD_1998_2017_Circular_Bar.svg", 
        width=15, height=15)
 
 
