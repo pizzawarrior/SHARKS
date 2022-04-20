@@ -19,7 +19,7 @@ mean(Cali_Beaches_1959_2018$Age_Number, na.rm = TRUE)
 #Separate Beaches/ County column to produce COUNTY column, filter years
 Cali_Beaches_and_Counties_Separated <- Cali_Beaches_1959_2018 %>% 
   separate(col=Location.and.County..Cleaned., 
-           into=c("Beach", "County"), sep=",")
+           into=c("Beach", "County"), sep=", ")
 
 View(Cali_Beaches_and_Counties_Separated)
   
@@ -40,7 +40,7 @@ ggplot(Filtered_Cali_Beaches_1959_2018, aes(x=County, y=Avg_Age_Rounded)) +
   ggtitle("Average Age of Shark Attack Victims Top 12 Counties, CA, 1959-2018")
 
 #Save plot
-ggsave(file="Avg_Age_of_Victims_Top_12_Counties_in_CA_1959_2018.svg", 
-       width=15, height=8)
+#ggsave(file="Avg_Age_of_Victims_Top_12_Counties_in_CA_1959_2018.svg", 
+      # width=15, height=8)
 
 
