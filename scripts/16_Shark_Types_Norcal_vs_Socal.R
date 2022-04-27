@@ -1,8 +1,4 @@
-#A look at types of sharks and where: red triangle vs rest of state??
-
-# a pie chart sectioned by type of shark for all of CA? (white, hammer, mako, other/ unconfirmed)
-
-#red triangle vs non, types of sharks BEE SWARM????
+#A look at types of sharks and where: stacked barplot arranged by county from N to S
 
 #norcal vs socal: types of sharks: BEE SWARM??????
 
@@ -10,6 +6,7 @@ library(tidyverse)
 library(svglite)
 library(plotly)
 library(scales)
+library(forcats)
 
 #read in filtered dataset of 1958-2018 Cali Beaches
 Cali_Beaches<- read.csv("~/First-Repo/data/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
@@ -52,14 +49,21 @@ typeof(CA_types$County)
 ggplot(CA_types, aes(fill= sharks, y=Incidents, x=County)) + 
   geom_bar(position="fill", stat="identity")
 
-#REORDER BARS FROM N TO S!!
+#Vector, counties North to South
+Counties<- c("Del Norte", "Humboldt", "Mendocino", "Sonoma", "Marin", 
+             "San Francisco", "San Mateo", "Santa Cruz", "Monterey", 
+             "San Luis Obispo", "Santa Barbara", "Ventura", 
+             "Los Angeles", "Orange County", "San Diego")
+
+#Need to reverse vector to keep north to south when we coord flip the plot:
+Rev_Counties<- rev(Counties)
+
+#Keep bars N TO S!!
 ggplot(CA_types, aes(fill= sharks, y=Incidents, x = factor(County, level = 
-      c("Del Norte", "Humboldt", "Mendocino", "Sonoma", "Marin", 
-        "San Francisco", "San Mateo", "Santa Cruz", "Monterey", 
-        "San Luis Obispo", "Santa Barbara", "Ventura", 
-      "Los Angeles", "Orange County", "San Diego")))) +
-  geom_bar(position="fill", stat="identity")
-#+ scale_fill_manual("Value", values = c("#EFF3FF", "#BDD7E7", "#6BAED6", "#2171B5"))
+      Rev_Counties))) +
+  geom_bar(position="fill", stat="identity") +
+  coord_flip() #Now South is on the bottom, need to flip again:
+
 
 #ggsave("Shark_Type_Stack_County.svg", width = 15, height = 8)
 
@@ -102,14 +106,4 @@ CA_types %>%
       fill = sharks) +
   geom_bar(position = "stack",
            stat = "count")
-
-
-
-
-#Eventually we will get here:
-#NorCal COMBINE counties:
-#orcal<- c("Sonoma", "Marin", "San Mateo", "Santa Cruz", 
-         #  "Monterey", "San Francisco", "Mendocino", "Humboldt",
-        #   "Del Norte")
-
 
