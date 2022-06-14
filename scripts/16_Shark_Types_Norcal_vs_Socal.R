@@ -62,17 +62,17 @@ Rev_Counties<- rev(Counties)
 ggplot(CA_types, aes(fill= sharks, y=Incidents, x = factor(County, level = 
       Rev_Counties))) +
   geom_bar(position="fill", stat="identity") +
-  coord_flip() #Now South is on the bottom, need to flip again:
-
-
+  coord_flip() #Now South is on the bottom
 #ggsave("Shark_Type_Stack_County.svg", width = 15, height = 8)
 
+
+
+
+#Alternatives:
 #We can try ascending order: SUCCESS
 ggplot(CA_types, 
        aes(forcats::fct_reorder(County, Incidents, sum), Incidents, fill = sharks)) +
   geom_col() + xlab('County')
-
-
 
 #Can we reorder by relative frequency of WHITE incidents??
 #NO WORKY

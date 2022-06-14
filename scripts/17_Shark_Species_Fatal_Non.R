@@ -66,7 +66,7 @@ ggplot(CA_types_fatal_other, aes(fill=Fatal..Y.N., y=sum_Incidents, x=Shark)) +
   geom_bar(position="dodge", stat="identity") +
   ggtitle("CA Other= 80/6, White= 134/11")
 
-ggsave(file="17.CA_White_vs_Other_Fatal_Non_Pie.svg", width=15, height=8)
+#ggsave(file="17.CA_White_vs_Other_Fatal_Non_Pie.svg", width=15, height=8)
 
 CA_white<- CA_types_fatal_other %>% 
   filter(Shark == "white")

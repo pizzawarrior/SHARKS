@@ -89,7 +89,6 @@ ggsave(file="Days_of_Incidents_CA_Heatmap_1879_2020.svg", width=15, height=8)
     
   theme(legend.position = "bottom")
   
-  
 p <-p + facet_grid(year~month)
 p <-p + scale_y_continuous(trans = "reverse", breaks = unique(df$hour))
 p <-p + scale_x_continuous(breaks =c(1,10,20,31))

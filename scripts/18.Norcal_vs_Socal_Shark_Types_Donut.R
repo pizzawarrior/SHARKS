@@ -1,5 +1,5 @@
 
-# Donut plots of breakdown of incidents by shark type for Norcal and for Socal
+#Donut plots of breakdown of incidents by shark type for Norcal and for Socal
 #Barplot of Norcal vs Socal Shark types with fatals
 #Barplot of Norcal vs Socal Fatal rate
 
@@ -135,7 +135,6 @@ ggplot(CA_species_county_fatal, aes(fill=Fatal..Y.N., y=sum_Incidents, x=sharks)
   theme_ipsum() +
   theme(legend.position="none") +
   xlab("")
-
 #ggsave(file="18.CA_Norcal_Vs_Socal_Shark_count.svg", width=15, height=8)
 
 #Let's do a Norcal Fatal Rate vs Socal Fatal Rate:

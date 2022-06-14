@@ -117,8 +117,8 @@ ggplot(Socal_minus_year_shifted, aes(new_day, month, fill=Incidents))+
   geom_tile(color= "white",size= 2)+ 
   scale_fill_viridis(name="Incidents", option ="D", limits=c(0,12),
 #Let's try to get the legend similar to the one for Norcal:
-                     breaks = c(0, 3, 6, 9, 12),
-                     labels = c(0, 3, 6, 9, 12))+
+    breaks = c(0, 3, 6, 9, 12),
+      labels = c(0, 3, 6, 9, 12))+
   coord_equal()+
   theme_classic()+
   ggtitle("Socal, Mon= 2, Sun= 8, Dec= 12")
