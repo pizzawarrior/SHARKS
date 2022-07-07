@@ -5,7 +5,7 @@
 
 library(tidyverse)
 library(forcats)
-library("ggplot2")
+library(ggplot2)
 
 #read in filtered dataset of 1958-2018 Cali Beaches
 Cali_Beaches<- read.csv("~/First-Repo/data/GSAF5-Cali_Post_1958-2017_BEACHES.csv")
