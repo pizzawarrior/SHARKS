@@ -12,7 +12,7 @@ Cali_Beaches<- read.csv("~/First-Repo/data/GSAF5-Cali_Post_1958-2017_BEACHES.csv
 ?col
 
 Cali_Beaches_and_Counties_Separated <- Cali_Beaches %>% 
-  separate(col=Location.and.County..Cleaned., 
+  separate(col= Location.and.County..Cleaned., 
            into=c("Beach", "County"), sep=",")
 
 #Arrange Beach by top 10
