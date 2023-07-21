@@ -17,7 +17,7 @@ Using the Global Shark Attack File I was able to address specific questions I ha
 ## Setup
 ______________________________________________________________________________________________________________________________
 
-Once you have forked or cloned this repository to your computer please verify tidyverse is installed in R studio. 
+Once you have forked or cloned this repository please verify tidyverse is installed in R studio. 
 
 ```
 install.packages("tidyverse")
